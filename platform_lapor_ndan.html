@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAPOR NDAN - Sistem Pelaporan Anonim</title>
+    <!-- Tailwind CSS untuk Desain -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 font-sans antialiased text-gray-800 selection:bg-blue-300">
+
+    <!-- Header / Navbar -->
+    <header class="bg-blue-700 text-white shadow-md">
+        <div class="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-shield-halved text-2xl"></i>
+                <div>
+                    <h1 class="text-xl font-bold tracking-wide">LAPOR NDAN</h1>
+                    <p class="text-xs text-blue-200">Sistem Pelaporan Warga Tangerang Selatan</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-3xl mx-auto px-4 py-8">
+        
+        <!-- Peringatan Keamanan -->
+        <div class="bg-blue-50 border-l-4 border-blue-600 p-4 mb-6 rounded shadow-sm">
+            <div class="flex items-start">
+                <i class="fa-solid fa-user-secret text-blue-600 mt-1 mr-3"></i>
+                <p class="text-sm text-gray-700">
+                    <strong>Identitas Anda Terlindungi.</strong> Platform ini 100% anonim. Laporkan potensi bentrok, perundungan, atau indikasi miras/narkoba di sekitar Anda tanpa rasa takut.
+                </p>
+            </div>
+        </div>
+
+        <!-- Form Pelaporan -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-lg font-semibold border-b pb-3 mb-5 text-gray-800">Buat Laporan Baru</h2>
+            
+            <form id="laporForm" class="space-y-5">
+                
+                <!-- Kategori Laporan -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Kategori Pelanggaran *</label>
+                    <select required class="w-full border border-gray-300 rounded-md p-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
+                        <option value="" disabled selected>Pilih jenis kejadian...</option>
+                        <option value="bentrok">Potensi Tawuran / Bentrok</option>
+                        <option value="perundungan">Perundungan / Bullying</option>
+                        <option value="miras_narkoba">Indikasi Miras / Narkoba</option>
+                        <option value="lainnya">Lainnya</option>
+                    </select>
+                </div>
+
+                <!-- Lokasi -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Lokasi Kejadian *</label>
+                    <input type="text" required placeholder="Contoh: Jl. Pamulang Raya, dekat warkop..." class="w-full border border-gray-300 rounded-md p-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
+                </div>
+
+                <!-- Deskripsi -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Kronologi / Deskripsi Kejadian *</label>
+                    <textarea required rows="4" placeholder="Ceritakan detail apa yang Anda lihat..." class="w-full border border-gray-300 rounded-md p-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"></textarea>
+                </div>
+
+                <!-- Akses Kamera / Upload Bukti -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Bukti Foto *</label>
+                    
+                    <!-- Tombol Upload / Kamera -->
+                    <div id="uploadContainer" class="relative border-2 border-dashed border-gray-300 rounded-lg p-6 flex flex-col items-center justify-center bg-gray-50 hover:bg-gray-100 transition cursor-pointer">
+                        <i class="fa-solid fa-camera text-3xl text-gray-400 mb-2"></i>
+                        <span class="text-sm text-gray-600 font-medium">Ketuk untuk Ambil Foto</span>
+                        <span class="text-xs text-gray-400 mt-1">atau pilih dari galeri</span>
+                        
+                        <!-- Input File (Bisa akses kamera hp) -->
+                        <input type="file" id="fotoInput" accept="image/*" capture="environment" required class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                    </div>
+
+                    <!-- Preview Gambar (Disembunyikan secara default) -->
+                    <div id="previewContainer" class="hidden relative mt-3 rounded-lg overflow-hidden border border-gray-200">
+                        <img id="imagePreview" src="" alt="Preview Bukti" class="w-full h-auto object-cover max-h-64">
+                        <!-- Tombol Hapus -->
+                        <button type="button" id="hapusFoto" class="absolute top-2 right-2 bg-red-600 text-white rounded-full p-2 shadow hover:bg-red-700 transition flex items-center justify-center" title="Hapus Foto">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tombol Kirim -->
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-md shadow-md transition flex items-center justify-center mt-6">
+                    <i class="fa-solid fa-paper-plane mr-2"></i> Kirim Laporan Anonim
+                </button>
+
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 text-gray-500 text-sm mt-8 border-t border-gray-200">
+        <p>&copy; 2026 <strong>LAPOR NDAN</strong></p>
+        <p>Aman. Rahasia. Terpercaya.</p>
+    </footer>
+
+    <!-- Script untuk fitur Preview & Hapus Foto -->
+    <script>
+        const fotoInput = document.getElementById('fotoInput');
+        const uploadContainer = document.getElementById('uploadContainer');
+        const previewContainer = document.getElementById('previewContainer');
+        const imagePreview = document.getElementById('imagePreview');
+        const hapusFotoBtn = document.getElementById('hapusFoto');
+
+        // Ketika pengguna memilih foto dari kamera atau galeri
+        fotoInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            
+            if (file) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    // Masukkan hasil bacaan gambar ke tag <img>
+                    imagePreview.src = e.target.result;
+                    
+                    // Sembunyikan kotak upload, tampilkan kotak preview
+                    uploadContainer.classList.add('hidden');
+                    previewContainer.classList.remove('hidden');
+                }
+                
+                // Mulai membaca file
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Ketika tombol hapus ditekan
+        hapusFotoBtn.addEventListener('click', function() {
+            // Kosongkan input file
+            fotoInput.value = '';
+            // Kosongkan sumber gambar
+            imagePreview.src = '';
+            
+            // Sembunyikan kotak preview, tampilkan kembali kotak upload
+            previewContainer.classList.add('hidden');
+            uploadContainer.classList.remove('hidden');
+        });
+
+        // Mencegah form reload saat diklik kirim (karena belum ada database)
+        document.getElementById('laporForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Simulasi: Laporan berhasil dikirim secara anonim! (Sistem backend belum terhubung)');
+            // Reset form setelah dikirim
+            this.reset();
+            hapusFotoBtn.click(); // Reset bagian foto juga
+        });
+    </script>
+</body>
+</html>
